@@ -27,7 +27,6 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 showPopupList: false,
-                // planets: [],
             };
 
         case SearchBoxActions.SET_SELECTED_ITEM:

@@ -8,7 +8,6 @@ import App from './App';
 import rootSaga from './sagas';
 import {composeWithDevTools} from 'redux-devtools-extension';
 
-
 const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(reducer, composeWithDevTools(
@@ -16,6 +15,7 @@ const store = createStore(reducer, composeWithDevTools(
 ));
 
 sagaMiddleware.run(rootSaga);
+
 render(
     <Provider store={store}>
         <App/>
