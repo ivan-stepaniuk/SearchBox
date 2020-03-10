@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect, useRef} from 'react';
+import SearchInput from './components/SearchInput';
+import PopupList from './components/PopupList';
+import './index.css';
+import SearchBoxActions from './actions/index';
+import {connect} from 'react-redux';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function App({closePopupList}) {
+    const refContainer = useRef();
+    useEffect(addClickOutsideListener, []);
+
+    function handleClickOutside(e) {
+        if (!refContainer.current.contains(e.target)) {
+            closePopupList();
+        }
+    }
+
+    function addClickOutsideListener() {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }
+
+    return (
+        <div className='search-box-container'
+             ref={refContainer}>
+            <h1>The Star Wars Planets</h1>
+            <SearchInput/>
+            <PopupList/>
+        </div>
+    );
 }
+
+const mapDispatchToProps = {
+    closePopupList: SearchBoxActions.actions.closePopupList
+};
+
+App = connect(null, mapDispatchToProps)(App);
 
 export default App;
